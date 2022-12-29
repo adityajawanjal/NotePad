@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
     <>
-      <HStack bgColor={"whatsapp.100"} h={"28"} justifyContent={"space-around"}>
+      <HStack bgColor={"whatsapp.100"} h={"28"} justifyContent={"space-around"} position={"sticky"} top={"0.5"} >
         <Box>
           <Heading>NotePad</Heading>
         </Box>
@@ -18,9 +18,11 @@ const Navbar = () => {
             autoFocus={true}
           />
         </Box>
-        <Box>
-          <Link to={"/notes"} >My Notes</Link>
-        </Box>
+        <HStack gap={3}>
+          <Link to={"/"} >Home</Link>
+          <Link to={"/myNotes"} >My Notes</Link>
+          <Link to={"/profile"} >Aditya Jawanjal</Link>
+        </HStack>
       </HStack>
     </>
   );
