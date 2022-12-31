@@ -10,7 +10,7 @@ const Title = ({title}) => {
       <Divider
         borderWidth={"3px"}
         textAlign={"center"}
-        maxW={"99vw"}
+        maxW={"97vw"}
         borderColor={"blackAlpha.900"}
         mb={"8"}
       />

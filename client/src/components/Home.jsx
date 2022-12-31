@@ -1,7 +1,15 @@
 import React from "react";
 import { Button, Center, Heading, Text, VStack } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const onLogin = () => {
+    navigate("/login");
+  };
+  const onRegister = () => {
+    navigate("/register");
+  };
   return (
     <>
       <Center
@@ -24,10 +32,19 @@ const Home = () => {
             consectetur labore!
           </Text>
           <Center minW={"container.sm"}>
-            <Button type="button" bgColor={"whatsapp.100"} mr={"10"}>
+            <Button
+              type="button"
+              bgColor={"whatsapp.100"}
+              mr={"10"}
+              onClick={() => onLogin()}
+            >
               Log In
             </Button>
-            <Button type="button" bgColor={"whatsapp.100"}>
+            <Button
+              type="button"
+              bgColor={"whatsapp.100"}
+              onClick={() => onRegister()}
+            >
               Register
             </Button>
           </Center>

@@ -1,47 +1,62 @@
+import React, { useEffect, useState } from "react";
+import NoteCard from "./NoteCard";
+import Title from "./Title";
+import axios from "axios";
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Button,
-  Container,
-  Divider,
-  HStack,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Textarea,
 } from "@chakra-ui/react";
-import React from "react";
-import Title from "./Title";
 
 const MyNotes = () => {
+  const [data, setdata] = useState([]);
+
+  const handleChange = (e) => {
+    setdata((pre) => {
+      return { ...pre, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:5000/api/notes", data);
+  };
+  
+  useEffect(()=>{
+    axios.get("http://localhost:5000/api/notes").then((res)=>{setdata(res.data)}).catch((err)=>{console.log(err);})
+  },[])
+ console.log(data);
   return (
     <>
       <Title title={"These are My Notes..."} />
-      <Container>
-      <Box p={"5"} borderRadius={"3xl"} maxW={"40vw"}>
-        <Accordion defaultIndex={[0]} allowMultiple>
-          <AccordionItem>
-            <AccordionButton bgColor={"blackAlpha.300"}>
-              <Box textAlign={"left"} fontSize={"large"} flex={1} fontFamily={"cursive"} >
-                Title 1
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel textAlign={"justify"}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-              reiciendis nulla ex consequatur voluptatem placeat sunt, unde
-              deleniti fugit consectetur fugiat autem eos iure, optio harum
-              tenetur dolor. Ipsa, minima?
-              <Divider m={"5"} border={"2px solid black"} />
-              <HStack gap={3} justifyContent={"flex-end"}>
-                <Button size={"lg"} bgColor={"whatsapp.100"} type="button">Edit</Button>
-                <Button size={"lg"} bgColor={"whatsapp.100"} type="button">Delete</Button>
-              </HStack>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+      <form action="post" onSubmit={handleSubmit}>
+        <Stack m={"5"}>
+          <FormControl maxW={"56"}>
+            <FormLabel>Title : </FormLabel>
+            <Input type={"text"} name={"title"} onChange={handleChange} />
+          </FormControl>
+          <FormControl maxW={"96"}>
+            <FormLabel>Description : </FormLabel>
+            <Textarea name={"description"} onChange={handleChange} />
+          </FormControl>
+          <Button type="submit" size={"lg"} maxW={"32"}>
+            Add Note
+          </Button>
+        </Stack>
+      </form>
+      <Box>
+        {data.map((e, i) => {
+        return (
+          <React.Fragment key={e._id}>
+            <NoteCard title={e.title} no={i} description={e.description} />
+          </React.Fragment>
+        );
+      })}
       </Box>
-      </Container>
     </>
   );
 };

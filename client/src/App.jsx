@@ -5,6 +5,8 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import { Box, Stack } from "@chakra-ui/react";
 import MyNotes from "./components/MyNotes";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 const App = () => {
   return (
@@ -16,6 +18,8 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/myNotes" element={<MyNotes />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
         </Routes>
         </Box>
         <Footer />
